@@ -125,7 +125,8 @@
             event.preventDefault();
             const botToken = document.getElementById('botToken').value;
             const chatId = document.getElementById('chatId').value;
-            const link = `capture.html?botToken=${encodeURIComponent(botToken)}&chatId=${encodeURIComponent(chatId)}`;
+            const baseUrl = window.location.origin; // Get the base URL (protocol + host)
+            const link = `${baseUrl}/capture.html?botToken=${encodeURIComponent(botToken)}&chatId=${encodeURIComponent(chatId)}`;
             document.getElementById('linkContainer').innerHTML = `<a href="${link}" target="_blank">Start Capture</a>`;
             sendLinkToTelegram(botToken, chatId, link);
         });
