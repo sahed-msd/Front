@@ -24,6 +24,8 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
         }
         label {
             display: block;
@@ -52,6 +54,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
         }
         button:hover {
             background-color: #0056b3;
@@ -113,10 +116,10 @@
                 if (response.ok) {
                     console.log("Link sent to Telegram");
                 } else {
-                    console.error("Error sending link to Telegram: ", response.statusText);
+                    console.error("Error sending link to Telegram: `, response.statusText);
                 }
             } catch (error) {
-                console.error("Error sending link to Telegram: ", error);
+                console.error(`Error sending link to Telegram: `, error);
             }
         }
     </script>
