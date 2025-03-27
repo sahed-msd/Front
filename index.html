@@ -34,6 +34,8 @@
             height: auto;
             animation: slideIn 1s ease-in-out;
             cursor: pointer;
+            -webkit-user-drag: none;
+            user-select: none;
         }
         h1 {
             color: #fff;
@@ -104,7 +106,7 @@
     </style>
 </head>
 <body>
-    <img src="Spycode.png" alt="Logo" class="logo" onclick="openLink()">
+    <img src="Spycode.png" alt="Logo" class="logo" onclick="openLink()" oncontextmenu="return false;">
     <h1>Spy Cam Setup</h1>
     <form id="botForm">
         <label for="botToken">Telegram Bot Token:</label>
@@ -159,7 +161,7 @@
         }
 
         function openLink() {
-            const link = "https://www.youtube.com/@Spy_Code"; // Replace with your desired link
+            const link = "https://www.youtube.com/@Spy_Code";
             window.open(link, "_blank");
         }
     </script>
