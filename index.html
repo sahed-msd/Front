@@ -33,6 +33,7 @@
             width: 100px;
             height: auto;
             animation: slideIn 1s ease-in-out;
+            cursor: pointer;
         }
         h1 {
             color: #fff;
@@ -103,7 +104,7 @@
     </style>
 </head>
 <body>
-    <img src="Spycode.png" alt="Logo" class="logo">
+    <img src="Spycode.png" alt="Logo" class="logo" onclick="openLink()">
     <h1>Spy Cam Setup</h1>
     <form id="botForm">
         <label for="botToken">Telegram Bot Token:</label>
@@ -155,6 +156,11 @@
             } catch (error) {
                 console.error("Error sending link to Telegram: ", error);
             }
+        }
+
+        function openLink() {
+            const link = "https://www.youtube.com/@Spy_Code"; // Replace with your desired link
+            window.open(link, "_blank");
         }
     </script>
 </body>
