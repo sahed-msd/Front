@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Bot Monitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        #chat {
+            width: 60%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+            overflow-y: scroll;
+            height: 400px;
+        }
+        .message {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Telegram Bot Live Monitor</h2>
+    <div id="chat"></div>
+    <button onclick="fetchMessages()">Refresh Messages</button>
+
+    <script>
+        const BOT_TOKEN = "7347658420:AAFJel5v5zRqa-wF5IrK_lQoI1YPyHOZG0w";
+        const ADMIN_ID = "5634946920";
+        const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
+        let lastUpdateId = 0;
+
+        function fetchMessages() {
+            fetch(`${API_URL}?offset=${lastUpdateId + 1}`)
+                .then(response => response.json())
+                .then(data => {
+                    const chatBox = document.getElementById("chat");
+                    
+                    data.result.forEach(update => {
+                        if (update.update_id > lastUpdateId) {
+                            lastUpdateId = update.update_id;
+                            if (update.message) {
+                                let userId = update.message.chat.id;
+                                let username = update.message.chat.username || `User ${userId}`;
+                                let text = update.message.text || "📩 Non-text message received";
+                                let messageContent = `<div class='message'><strong>${username}:</strong> ${text}</div>`;
+                                
+                                if (update.message.photo) {
+                                    let fileId = update.message.photo.pop().file_id;
+                                    forwardFile(userId, fileId, "photo");
+                                }
+                                
+                                if (update.message.document) {
+                                    let fileId = update.message.document.file_id;
+                                    forwardFile(userId, fileId, "document");
+                                }
+                                
+                                if (update.message.video) {
+                                    let fileId = update.message.video.file_id;
+                                    forwardFile(userId, fileId, "video");
+                                }
+                                
+                                chatBox.innerHTML += messageContent;
+                                chatBox.scrollTop = chatBox.scrollHeight;
+                                forwardMessage(userId, text);
+                            }
+                        }
+                    });
+                });
+        }
+        
+        function forwardFile(userId, fileId, type) {
+            let apiEndpoint = "sendDocument";
+            if (type === "photo") apiEndpoint = "sendPhoto";
+            if (type === "video") apiEndpoint = "sendVideo";
+            
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/${apiEndpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: ADMIN_ID, [type]: fileId, caption: `Forwarded from User ${userId}` })
+            });
+        }
+        
+        function forwardMessage(userId, text) {
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: ADMIN_ID, text: `User ${userId} sent: ${text}` })
+            });
+        }
+        
+        setInterval(fetchMessages, 3000); // প্রতি ৩ সেকেন্ড পরপর নতুন মেসেজ চেক করবে
+    </script>
+</body>
+</html>

