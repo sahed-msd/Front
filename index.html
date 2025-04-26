@@ -203,7 +203,14 @@
         <audio id="backgroundMusic" loop>
         <source src="Soundtrack.mp3" type="audio/mpeg">
     </audio>
-
+function startStory() {
+            welcomeScreen.style.display = "none";
+            storyScreen.style.display = "flex";
+            currentText = 0;
+            typeWriterEffect(stories[0].text[currentText]);
+            let music = document.getElementById("backgroundMusic");
+            music.play().catch(error => console.log("মিউজিক চালাতে সমস্যা:", error));
+                        }
             
 </body>
 </html>
