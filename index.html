@@ -201,6 +201,15 @@
             window.open(aboutMeUrl, "_blank");
         }
     </script>
-    <audio id="bg-music" src="Soundtrack.mp3" autoplay hidden loop></audio>
+    <audio id="bg-music" src="Soundtrack.mp3" loop muted></audio>
+
+<script>
+window.onload = function() {
+  const audio = document.getElementById('bg-music');
+  audio.play().then(() => {
+    audio.muted = false;
+  }).catch(()=>{});
+};
+</script>
 </body>
 </html>
