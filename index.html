@@ -205,17 +205,9 @@
 
 <script>
     window.onload = function() {
-        // Create a click event to simulate user interaction
-        const audio = document.getElementById('bg-music');
-        const clickEvent = new MouseEvent('click');
-        
-        // Simulate a click to allow audio play
-        document.body.dispatchEvent(clickEvent);
-        
-        // Play the music after the simulated click
-        audio.play().catch(() => {});
+        document.getElementById('bg-music').play().catch(()=>{});
     };
-</script>এবং ঊ। এর  
+</script>
             
 </body>
 </html>
