@@ -200,17 +200,15 @@
             const aboutMeUrl = "aboutme.html"; // Change this to the actual URL of your About Me page
             window.open(aboutMeUrl, "_blank");
         }
-        <audio id="backgroundMusic" loop>
-        <source src="Soundtrack.mp3" type="audio/mpeg">
-    </audio>
-function startStory() {
-            welcomeScreen.style.display = "none";
-            storyScreen.style.display = "flex";
-            currentText = 0;
-            typeWriterEffect(stories[0].text[currentText]);
-            let music = document.getElementById("backgroundMusic");
-            music.play().catch(error => console.log("মিউজিক চালাতে সমস্যা:", error));
-                        }
+    </script>
+    
+        <audio id="bg-music" src="Soundtrack.mp3" loop></audio>
+
+<script>
+window.onload = function() {
+  document.getElementById('bg-music').play().catch(()=>{});
+};
+</script>
             
 </body>
 </html>
