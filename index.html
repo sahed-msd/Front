@@ -201,20 +201,12 @@
             window.open(aboutMeUrl, "_blank");
         }
     </script>
-    
-        <audio id="bg-music" src="Soundtrack.mp3" loop style="display:none;"></audio>
+    <audio id="bg-music" src="Soundtrack.mp3" autoplay loop style="display:none;"></audio>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     const audio = document.getElementById('bg-music');
-    const playAudio = () => {
-        audio.play().catch(() => {}); // যদি অটোপ্লে ব্লক হয়, পরে চেষ্টা করবে
-    };
-
-    playAudio(); // প্রথমেই চেষ্টা করবে
-    
-    document.body.addEventListener('click', playAudio, { once: true });
-    document.body.addEventListener('touchstart', playAudio, { once: true });
+    audio.play().catch(()=>{});
 });
 </script>
             
