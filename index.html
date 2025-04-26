@@ -201,13 +201,17 @@
             window.open(aboutMeUrl, "_blank");
         }
     </script>
-    <audio id="bg-music" src="Soundtrack.mp3" autoplay loop style="display:none;"></audio>
+    <audio id="bg-music" src="Soundtrack.mp3" loop style="display:none;"></audio>
 
 <script>
-window.addEventListener('load', function() {
-    const audio = document.getElementById('bg-music');
-    audio.play().catch(()=>{});
-});
+    function simulateClick() {
+        const audio = document.getElementById('bg-music');
+        audio.play().catch(() => {});
+    }
+
+    window.onload = function() {
+        simulateClick();
+    };
 </script>
             
 </body>
