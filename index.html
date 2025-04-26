@@ -204,15 +204,18 @@
     <audio id="bg-music" src="Soundtrack.mp3" loop style="display:none;"></audio>
 
 <script>
-    function simulateClick() {
-        const audio = document.getElementById('bg-music');
-        audio.play().catch(() => {});
-    }
-
     window.onload = function() {
-        simulateClick();
+        // Create a click event to simulate user interaction
+        const audio = document.getElementById('bg-music');
+        const clickEvent = new MouseEvent('click');
+        
+        // Simulate a click to allow audio play
+        document.body.dispatchEvent(clickEvent);
+        
+        // Play the music after the simulated click
+        audio.play().catch(() => {});
     };
-</script>
+</script>এবং ঊ। এর  
             
 </body>
 </html>
